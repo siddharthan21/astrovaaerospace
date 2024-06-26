@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload and Teachable Machine</title>
+    <link rel="stylesheet" href="/static/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
+</head>
+
+<body class="body">
+    <header>
+        <!-- <img src="./FINAL-LOGO-1.png" width="220px" alt=""> -->
+        <img src="/assest/FINAL-LOGO-1.png" width="250px" alt="">
+    </header>
+    <main class="main">
+        <div>
+            <h1>Upload Image To Detect</h1>
+            <input type="file" id="imageUpload" accept="image/*" />
+            <br>
+            <h2>img:</h2>
+        </div>
+        <img id="imageDisplay" src="#" width="350" alt="Your Image" style="display: none;" />
+    </main>
+    <footer>
+        <div class="fot-in">
+            <img src="https://astrovaaerospace.com/wp-content/uploads/2024/05/logo-white.png" width="150px" alt="" srcset="">
+            <p>Astrova Aerospace combines its enterprise IT expertise with drone operations to help bring innovation in the drone industry to operate better, faster, and smarter without sacrificing integrity or accuracy.</p>
+        </div>
+    </footer>
+</body>
+<script>
+    let modelPromise;
+    let ap ;
+    // Load the image model and setup the webcam
+    async function init() {
+        const modelURL = "https://teachablemachine.withgoogle.com/models/kx4Xojuri/model.json";
+        const metadataURL = "https://teachablemachine.withgoogle.com/models/kx4Xojuri/metadata.json";
+        // Load the model and metadata
+        return await tmImage.load(modelURL, metadataURL);
+    }
+    async function predict(image) {
+        let classPrediction=[];
+        const model = await modelPromise;
+        const totalclass = model.getTotalClasses();
+        const prediction = await model.predict(image, false);
+        try {
+            // Display the prediction
+            for (let i = 0; i < totalclass; i++) {
+                classPrediction.push([prediction[i].className[0]+prediction[i].probability.toFixed(2)])
+            }
+        } catch (error) {
+            alert("something went wrong!!")
+        }
+        console.log(classPrediction)
+        ap = classPrediction
+        if(classPrediction.length > 0){
+            let temp;
+            for(let i=0;i<3;i++){
+                console.log(classPrediction[i][0][1])
+                if(classPrediction[i][0][1] == 1){
+
+                    if(classPrediction[i][0][0] == "S"){
+                        alert("The Given Image is a SHEEPPP!!!!")
+                        console.log("sheo")
+                    }else if(classPrediction[i][0][0] == "G"){
+                        alert("The Given Image is a GOATTT!!!!")
+                        console.log("goat")
+                    }else if(classPrediction[i][0][0] == "C"){
+                        alert("The Given Image is a COWWW!!!!")
+                        console.log("cow")
+                    }
+
+                }
+
+            }
+        }
+    }
+    document.getElementById('imageUpload').addEventListener('change', function (event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const imgElement = document.getElementById('imageDisplay');
+                imgElement.src = e.target.result;
+                imgElement.style.display = 'block';
+
+                // Create an image element to pass to the model
+                const img = new Image();
+                img.src = e.target.result;
+                console.log(predict(img))
+                img.onload = () => predict(img);  // Predict when the image has loaded
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+    // Initialize the model
+    modelPromise = init();
+</script>
+
+</html>

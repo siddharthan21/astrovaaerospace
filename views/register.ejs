@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sgin Up Page</title>
+    <link rel="stylesheet" href="/static/index.css">
+</head>
+
+<body>
+    <div class="login-container">
+        <div class='login-main'>
+
+            <div class="form">
+                <div class='form-left'>
+                    <img src="/assest/FINAL-LOGO-1.png" width="250px" alt="">
+                </div>
+                <form action="/register" method="post" id="loginForm">
+                    <div class="form-heading">
+                        <h3>Get Started Now</h3>
+                        <h3><span>With  </span>Astrova Aerospace</h3>
+                        <br />
+                        <br />
+                        <br />
+                    </div>
+                    <div class='form-right'>
+                        <%  if (error) { %>
+                            <p style="color: red;"><%= error %></p>
+                        <% } %>
+                        <div class="input-box">
+                            <label for=""  class="email">Email</label>
+                            <input type="text" name="email" id="username" placeholder="Username" required>
+                        </div>
+                        <div class="input-box">
+                            <label for="password">Password</label>
+                            <input type="password" name="password" id="password" placeholder="Password" required>
+                        </div>
+                        <div class="input-box">
+                            <label for="password">confirm Password</label>
+                            <input type="password" name="compassword" id="password" placeholder="Password" required>
+                        </div>
+                        <div class="input-box-login">
+                        </div>
+                        <div class="grp-btn">
+                            <button type="submit" class="btn">Sgin Up</button>
+                            <a href="/auth/google" class="btn">Login With Google</a>
+                        </div>
+                        <div class="google">
+                            <a href="/">Registered already?</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
