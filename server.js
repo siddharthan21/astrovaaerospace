@@ -13,7 +13,7 @@ const saltRounds = 10;
 // const router = require("./route")
 const app = express();
 
-const port =35.160.120.126
+// const port =35.160.120.126
 
 app.set('view engine', 'ejs')
 
@@ -195,9 +195,8 @@ app.post('/register', async (req, res) => {
     }
 
 })
+const PORT = process.env.PORT || 3000;  // Use the port provided by Render or default to 3000 for local development
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
 
-
-
-app.listen(port, () => {
-    console.log("3000")
-})
