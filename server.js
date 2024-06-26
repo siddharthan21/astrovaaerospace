@@ -13,7 +13,7 @@ const saltRounds = 10;
 // const router = require("./route")
 const app = express();
 
-const port = process.env.PORT || "https://main-1wvn.onrender.com/"
+const port =35.160.120.126
 
 app.set('view engine', 'ejs')
 
