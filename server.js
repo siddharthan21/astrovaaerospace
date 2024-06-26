@@ -166,7 +166,8 @@ app.post('/register', async (req, res) => {
         try {
             await client.connect();
             // const database = client.db('auth_demo'); // Replace with your database name
-            // const collection = database.collection('users'); // Replace with your collection name            const database = client.db('mm'); // Replace with your database name
+            // const collection = database.collection('users'); // Replace with your collection name           
+            const database = client.db('mm'); // Replace with your database name
             const collection = database.collection('user'); // Replace with your collection name
             const user = await collection.findOne({ username: username });
 
