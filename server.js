@@ -24,15 +24,15 @@ app.use('/static', express.static(path.join(__dirname, 'public')));
 app.use('/assest', express.static(path.join(__dirname, 'public/assest')));
 
 // const uri = 'mongodb://localhost:27017'; // Replace with your MongoDB URI
-// const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 const uri = "mongodb+srv://siddharthan44:YL75aMMTttWAnEeE@login.g6kvaie.mongodb.net/?appName=Login";
-const client = new MongoClient(uri, {
-    serverApi: {
-      version: ServerApiVersion.v1,
-      strict: true,
-      deprecationErrors: true,
-    }
-  });
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+// const client = new MongoClient(uri, {
+//     serverApi: {
+//       version: ServerApiVersion.v1,
+//       strict: true,
+//       deprecationErrors: true,
+//     }
+//   });
 
 app.use(session({
     secret: "ture", // Replace with your own secret key
@@ -53,11 +53,12 @@ function isLoggedIn(req, res, next) {
     return Math.random() * (max - min) + min;
   }
 app.get('/success',isLoggedIn, async(req,res)=>{
-    let username = "req.user.email"
+    let username = req.user.email
         try {
             await client.connect();
-            const database = client.db('admin').command({ ping: 1 }); // Replace with your database name
-            const collection = database.collection('users'); // Replace with your collection name
+            const database = client.db('mm'); // Replace with your database name
+            const collection = database.collection('user'); // Replace with your collection name
+            console.log(database)
             const user = await collection.findOne({ username: username });
             if (user) {
                 req.session.username = username;
@@ -126,11 +127,10 @@ app.post('/login', async (req, res) => {
         await client.connect();
         // const database = client.db('auth_demo'); // Replace with your database name
         // const collection = database.collection('users'); // Replace with your collection name
-        const database = client.db('admin').command({ ping: 1 }); // Replace with your database name
-        const collection = database.collection('users'); // Replace with your collection name
-
+        const database = client.db('mm'); // Replace with your database name
+        const collection = database.collection('user'); // Replace with your collection name
+        console.log(database)
         const user = await collection.findOne({ username: username, password: password });
-
         if (user) {
             req.session.username = username;
             res.cookie('loggedIn', true, { maxAge: 2 * 60 * 60 * 1000 }); // Cookie expires in 2 hours
@@ -167,10 +167,8 @@ app.post('/register', async (req, res) => {
         try {
             await client.connect();
             // const database = client.db('auth_demo'); // Replace with your database name
-            // const collection = database.collection('users'); // Replace with your collection name
-            const database = client.db('admin').command({ ping: 1 }); // Replace with your database name
-            const collection = database.collection('users'); // Replace with your collection name
-
+            // const collection = database.collection('users'); // Replace with your collection name            const database = client.db('mm'); // Replace with your database name
+            const collection = database.collection('user'); // Replace with your collection name
             const user = await collection.findOne({ username: username });
 
             if (user) {
@@ -191,11 +189,8 @@ app.post('/register', async (req, res) => {
             }
         } catch (err) {
             return res.redirect('/')
-            // console.error('Error occurred while connecting to MongoDB or fetching documents:', err);
-            // res.send('An error occurred. Please try again.');
         }
     } else {
-        // return res.redirect('/register');
         return res.render('register', { error: "Password Miss Match" })
     }
 
