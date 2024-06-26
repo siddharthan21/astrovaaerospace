@@ -15,7 +15,7 @@ const app = express();
 
 // const port = process.env.PORT || 3000
 // const port = process.env.PORT || "https://main-1had.onrender.com/"
-const port = process.env.PORT || "https://main-1wvn.onrender.com/"
+const port =  "https://main-1wvn.onrender.com"
 
 app.set('view engine', 'ejs')
 
