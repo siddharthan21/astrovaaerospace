@@ -195,7 +195,7 @@ app.post('/register', async (req, res) => {
     }
 
 })
-const PORT = process.env.PORT || 3000// Use the port provided by Render or default to 3000 for local development
+const PORT = process.env.PORT || 0.0.0.0 // Use the port provided by Render or default to 3000 for local development
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
