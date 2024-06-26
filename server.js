@@ -43,7 +43,7 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 
-// require('dotenv').config()
+require('dotenv').config()
 
 
 function isLoggedIn(req, res, next) {
