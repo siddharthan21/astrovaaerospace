@@ -14,7 +14,7 @@ const saltRounds = 10;
 const app = express();
 
 // const port =35.160.120.126
-const port = process.env.PORT || 4000;
+const PORT = process.env.PORT || 4000;
 app.set('view engine', 'ejs')
 
 app.use(bosypaser.json())
