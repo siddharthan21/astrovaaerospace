@@ -12,9 +12,11 @@ require('./Auth')
 const saltRounds = 10;
 // const router = require("./route")
 const app = express();
+require('dotenv').config()
 
 // const port =35.160.120.126
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 3000;
+// const PORT = process.env.PORT || 4000;
 app.set('view engine', 'ejs')
 
 app.use(bosypaser.json())
@@ -42,9 +44,6 @@ app.use(session({
 }));
 app.use(passport.initialize())
 app.use(passport.session())
-
-require('dotenv').config()
-
 
 function isLoggedIn(req, res, next) {
     req.user ? next() : res.sendStatus(401);
