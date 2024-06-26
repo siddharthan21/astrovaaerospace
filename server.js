@@ -13,9 +13,7 @@ const saltRounds = 10;
 // const router = require("./route")
 const app = express();
 
-// const port = process.env.PORT || 3000
-// const port = process.env.PORT || "https://main-1had.onrender.com/"
-const port =  "https://main-1wvn.onrender.com"
+const port = process.env.PORT || "https://main-1wvn.onrender.com/"
 
 app.set('view engine', 'ejs')
 
@@ -200,6 +198,6 @@ app.post('/register', async (req, res) => {
 
 
 
-app.listen(port, () => {
-    console.log("3000")
-})
+// app.listen(port, () => {
+//     console.log("3000")
+// })
