@@ -198,6 +198,6 @@ app.post('/register', async (req, res) => {
 
 
 
-// app.listen(port, () => {
-//     console.log("3000")
-// })
+app.listen(port, () => {
+    console.log("3000")
+})
