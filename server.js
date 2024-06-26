@@ -4,7 +4,7 @@ const path = require("path")
 const bosypaser = require('body-parser')
 const { v4: uuidv4 } = require('uuid')
 const session = require('express-session')
-const { MongoClient } = require('mongodb');
+const { MongoClient,ServerApiVersion } = require('mongodb');
 const notifier = require('node-notifier');
 const bcrypt = require('bcrypt');
 const passport = require('passport')
@@ -23,7 +23,16 @@ app.use(bosypaser.urlencoded({ extended: true }))
 app.use('/static', express.static(path.join(__dirname, 'public')));
 app.use('/assest', express.static(path.join(__dirname, 'public/assest')));
 
-
+// const uri = 'mongodb://localhost:27017'; // Replace with your MongoDB URI
+// const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+const uri = "mongodb+srv://siddharthan44:YL75aMMTttWAnEeE@login.g6kvaie.mongodb.net/?appName=Login";
+const client = new MongoClient(uri, {
+    serverApi: {
+      version: ServerApiVersion.v1,
+      strict: true,
+      deprecationErrors: true,
+    }
+  });
 
 app.use(session({
     secret: "ture", // Replace with your own secret key
@@ -44,10 +53,10 @@ function isLoggedIn(req, res, next) {
     return Math.random() * (max - min) + min;
   }
 app.get('/success',isLoggedIn, async(req,res)=>{
-    let username = req.user.email
+    let username = "req.user.email"
         try {
             await client.connect();
-            const database = client.db('auth_demo'); // Replace with your database name
+            const database = client.db('admin').command({ ping: 1 }); // Replace with your database name
             const collection = database.collection('users'); // Replace with your collection name
             const user = await collection.findOne({ username: username });
             if (user) {
@@ -98,8 +107,6 @@ app.get("/", (req, res) => {
     }
 })
 
-const uri = 'mongodb://localhost:27017'; // Replace with your MongoDB URI
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 
 app.get('/home', (req, res) => {
@@ -117,7 +124,9 @@ app.post('/login', async (req, res) => {
     const password = req.body.password;
     try {
         await client.connect();
-        const database = client.db('auth_demo'); // Replace with your database name
+        // const database = client.db('auth_demo'); // Replace with your database name
+        // const collection = database.collection('users'); // Replace with your collection name
+        const database = client.db('admin').command({ ping: 1 }); // Replace with your database name
         const collection = database.collection('users'); // Replace with your collection name
 
         const user = await collection.findOne({ username: username, password: password });
@@ -157,7 +166,9 @@ app.post('/register', async (req, res) => {
     if (password == comfimpassword) {
         try {
             await client.connect();
-            const database = client.db('auth_demo'); // Replace with your database name
+            // const database = client.db('auth_demo'); // Replace with your database name
+            // const collection = database.collection('users'); // Replace with your collection name
+            const database = client.db('admin').command({ ping: 1 }); // Replace with your database name
             const collection = database.collection('users'); // Replace with your collection name
 
             const user = await collection.findOne({ username: username });
